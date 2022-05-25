@@ -66,7 +66,7 @@ const Init = async (callback) => {
       mail: userInfo.user.mail,
       userName: userInfo.user.name,
       userHead:
-        "https://gravatar.hsyhx.top/avatar/" +
+        "https://gravatar.loli.net/avatar/" +
         MD5(userInfo.user.mail).toString(),
       createData: createData,
     };
