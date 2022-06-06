@@ -41,7 +41,7 @@
               <n-gi span="0 768:3 1024:6 1440:10" />
               <n-gi span="0 768:30 1024:24 1440:16">
                 <n-alert type="info">
-                  如有任何问题, 请通过 qiaoshouzi@hgy.ooo 联系管理员 - PC
+                  如有任何问题, 请通过 qiaoshouzi@hgy.ooo 联系管理员
                 </n-alert>
                 <div style="padding-top: 15px"><router-view userEQ="PC" /></div>
               </n-gi>
@@ -52,7 +52,7 @@
               <n-gi span="1 768:0" />
               <n-gi span="34 768:0">
                 <n-alert type="info">
-                  如有任何问题, 请通过 qiaoshouzi@hgy.ooo 联系管理员 - Mobile
+                  如有任何问题, 请通过 qiaoshouzi@hgy.ooo 联系管理员
                 </n-alert>
                 <div style="padding-top: 15px">
                   <router-view userEQ="Mobile" />
