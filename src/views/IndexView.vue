@@ -1,43 +1,23 @@
 <template>
-  <n-card>
-    <n-tabs default-value="login" size="large" justify-content="space-evenly">
-      <n-tab-pane name="login" tab="登录">
-        <Login />
-      </n-tab-pane>
-      <n-tab-pane name="register" tab="注册">
-        <Register />
-      </n-tab-pane>
-    </n-tabs>
-  </n-card>
+  <PCView v-if="userEQ == 'PC'" />
+  <MobileView v-if="userEQ == 'Mobile'" />
 </template>
 
 <script>
 import { defineComponent } from "vue";
-import Login from "@/components/Index/IndexLogin.vue";
-import Register from "@/components/Index/IndexRegister.vue";
-import VueCookies from "vue-cookies";
-import router from "@/router";
-import { NCard, NTabs, NTabPane } from "naive-ui";
-
-const Init = () => {
-  if (VueCookies.get("SESSDATA") != null) {
-    router.push("/cp");
-  }
-};
+import PCView from "@/views/PC/IndexView.vue";
+import MobileView from "@/views/Mobile/IndexView.vue";
 
 export default defineComponent({
   components: {
-    // Components
-    Login,
-    Register,
-    // NaiveUI
-    NCard,
-    NTabs,
-    NTabPane,
+    PCView,
+    MobileView,
   },
-  setup() {
-    Init();
-    return {};
+  props: {
+    userEQ: {
+      type: String,
+      default: "PC",
+    },
   },
 });
 </script>
