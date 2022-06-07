@@ -21,21 +21,6 @@
                 Github
               </n-button>
             </div>
-            <!-- <n-grid
-              :x-gap="12"
-              :cols="12"
-              item-responsive
-              style="padding-top: 20px"
-            >
-              <n-gi span="1 1480:3" />
-              <n-gi span="10 1480:6">
-                <n-alert type="info">
-                  如有任何问题, 请通过 qiaoshouzi@hgy.ooo 联系管理员
-                </n-alert>
-                <div style="padding-top: 15px"><router-view /></div>
-              </n-gi>
-              <n-gi span="1 1480:3" />
-            </n-grid> -->
             <!-- PC -->
             <n-grid :cols="36" item-responsive style="padding-top: 20px">
               <n-gi span="0 768:3 1024:6 1440:10" />

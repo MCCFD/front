@@ -1,14 +1,8 @@
 <template>
-  <n-grid v-if="showUI" :cols="12" item-responsive>
-    <n-gi span="0 573:12">
-      <!-- PC UI -->
-      <CPPC v-if="showUI" :propsData="propsData" />
-    </n-gi>
-    <n-gi span="12 573:0">
-      <!-- Mobile UI -->
-      <CPMobile v-if="showUI" :propsData="propsData" />
-    </n-gi>
-  </n-grid>
+  <div v-if="showUI">
+    <PCView v-if="userEQ == 'PC'" :propsData="propsData" />
+    <MobileView v-if="userEQ == 'Mobile'" :propsData="propsData" />
+  </div>
   <n-card v-if="showError">
     <n-result status="500" :title="errorTitle" :description="errorDescription">
       <template #footer>
@@ -25,13 +19,12 @@
 
 <script>
 import { ref, defineComponent } from "vue";
-import CPMobile from "@/components/CP/eq/CPMobile.vue";
-import CPPC from "@/components/CP/eq/CPPC.vue";
-import MD5 from "crypto-js/md5";
 import router from "@/router";
+import MD5 from "crypto-js/md5";
 import VueCookies from "vue-cookies";
 import { getUserInfo } from "@/API/cpAPI";
-import { NGi, NSpin, NCard, NGrid, NResult, NButton } from "naive-ui";
+import PCView from "@/views/PC/CPView.vue";
+import MobileView from "@/views/Mobile/CPView.vue";
 import { useMessage, useNotification } from "naive-ui";
 
 const Init = async (callback) => {
@@ -84,23 +77,21 @@ const Init = async (callback) => {
 };
 
 const propsData = ref([]);
-const showUI = ref(false);
 const showError = ref(false);
 const showLoad = ref(true);
+const showUI = ref(false);
 const errorTitle = ref("");
 const errorDescription = ref("");
 export default defineComponent({
   components: {
-    // Components
-    CPMobile,
-    CPPC,
-    // NaiveUI
-    NGi,
-    NSpin,
-    NCard,
-    NGrid,
-    NResult,
-    NButton,
+    PCView,
+    MobileView,
+  },
+  props: {
+    userEQ: {
+      type: String,
+      default: "PC",
+    },
   },
   setup() {
     window.$message = useMessage();
@@ -117,9 +108,9 @@ export default defineComponent({
     });
     return {
       propsData,
-      showUI,
       showError,
       showLoad,
+      showUI,
       errorTitle,
       errorDescription,
       reload(e) {
