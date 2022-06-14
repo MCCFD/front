@@ -6,7 +6,8 @@ module.exports = defineConfig({
   },
   pwa: {
     name: "mc-cfd",
-    // themeColor: "#4DBA87",
+    // 背景色
+    themeColor: "#101014",
     // msTileColor: "#000000",
     appleMobileWebAppCapable: "yes",
     appleMobileWebAppStatusBarStyle: "black",
