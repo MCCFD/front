@@ -5,7 +5,7 @@ module.exports = defineConfig({
     allowedHosts: "all",
   },
   pwa: {
-    name: "mc-cfd",
+    name: "mc.cfd",
     // 背景色
     themeColor: "#101014",
     // msTileColor: "#000000",
