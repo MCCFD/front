@@ -30,19 +30,25 @@ workbox.routing.registerRoute(
   new workbox.strategies.NetworkOnly()
 );
 
-// Other
+// recaptcha
 workbox.routing.registerRoute(
-  new RegExp(".*.(?:png|jpg|jpeg|svg|gif|webp)"),
-  new workbox.strategies.StaleWhileRevalidate()
+  new RegExp("^https://www\\.recaptcha\\.net"),
+  new workbox.strategies.NetworkOnly()
 );
 workbox.routing.registerRoute(
-  new RegExp(".*.(css|js)"),
+  new RegExp("^https://www\\.gstatic\\.cn"),
+  new workbox.strategies.StaleWhileRevalidate()
+);
+
+// Gravatar头像
+workbox.routing.registerRoute(
+  new RegExp("^https://gravatar\\.loli\\.net"),
   new workbox.strategies.StaleWhileRevalidate()
 );
 
 // API POST
 workbox.routing.registerRoute(
-  new RegExp("^https://(.*)api\\.mc\\.cfd"),
+  new RegExp("^https://api\\.mc\\.cfd"),
   new workbox.strategies.NetworkOnly({
     plugins: [
       new workbox.backgroundSync.Plugin("apiQueue", {
@@ -55,11 +61,21 @@ workbox.routing.registerRoute(
 
 // API GET
 // workbox.routing.registerRoute(
-//   new RegExp("^https://(.*)api\\.mc\\.cfd"),
+//   new RegExp("^https://api\\.mc\\.cfd"),
 //   workbox.strategies.networkFirst({
 //     cacheName: "api",
 //   })
 // );
+
+// Other
+workbox.routing.registerRoute(
+  new RegExp(".*.(?:png|jpg|jpeg|svg|gif|webp)"),
+  new workbox.strategies.StaleWhileRevalidate()
+);
+workbox.routing.registerRoute(
+  new RegExp(".*.(css|js)"),
+  new workbox.strategies.StaleWhileRevalidate()
+);
 
 // 其他
 workbox.routing.setDefaultHandler(
