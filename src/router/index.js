@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import IndexView from "@/views/IndexView.vue";
 import CPView from "@/views/CPView.vue";
 import FindView from "@/views/FindView.vue";
+import NotFoundView from "@/views/NotFoundView.vue";
 
 const routes = [
   {
@@ -18,6 +19,11 @@ const routes = [
     path: "/find",
     name: "Find",
     component: FindView,
+  },
+  {
+    path: "/:pathMatch(.*)*",
+    name: "404",
+    component: NotFoundView,
   },
 ];
 
