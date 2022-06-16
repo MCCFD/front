@@ -27,7 +27,7 @@
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-vue": "^9.1.0",
     "naive-ui": "^2.30.4",
-    "prettier": "^2.7.0",
+    "prettier": "^2.7.1",
     "vue-cookies": "^1.8.1",
     "vue-recaptcha": "^2.0.2"
   },
