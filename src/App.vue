@@ -1,5 +1,5 @@
 <template>
-  <n-config-provider :locale="zhCN" :theme="darkTheme">
+  <n-config-provider :locale="zhCN" :date-locale="dateZhCN" :theme="darkTheme">
     <n-dialog-provider>
       <n-loading-bar-provider>
         <n-notification-provider :max="3">
@@ -64,7 +64,7 @@ import {
   NLoadingBarProvider,
   NNotificationProvider,
 } from "naive-ui";
-import { darkTheme, zhCN } from "naive-ui";
+import { darkTheme, zhCN, dateZhCN } from "naive-ui";
 
 export default defineComponent({
   components: {
@@ -83,6 +83,7 @@ export default defineComponent({
   setup() {
     return {
       zhCN,
+      dateZhCN,
       darkTheme,
     };
   },

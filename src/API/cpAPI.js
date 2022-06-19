@@ -169,6 +169,31 @@ const changePassword_getCheckMailCode = async (sessdata) => {
   }
 };
 
+/**
+ * 获取解析量
+ * @param {String} sessdata SESSDATA
+ * @returns StatisticsData | [errorTitle, errorMessage, errorCode?]
+ */
+const getStatistics = async (sessdata, startTime, endTime) => {
+  const path = "/api/cp/getStatistics";
+  const parameter = {
+    sessdata: sessdata,
+    startTime: startTime,
+    endTime: endTime,
+  };
+  try {
+    const reqData = await axiosPOST(parameter, path);
+    return Promise.resolve(reqData.data);
+  } catch (e) {
+    window.$notification.error({
+      title: e[0],
+      content: e[1],
+      duration: 10000,
+    });
+    return Promise.reject(e);
+  }
+};
+
 export {
   getUserInfo,
   updateResolution,
@@ -176,4 +201,5 @@ export {
   addResolution,
   changePassword,
   changePassword_getCheckMailCode,
+  getStatistics,
 };

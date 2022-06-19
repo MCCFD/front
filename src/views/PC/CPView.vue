@@ -22,6 +22,7 @@
       <template #footer>
         <n-space>
           <!-- <n-button @click="showChangeMail = true">修改邮箱</n-button> -->
+          <n-button @click="toStatistics">查看解析量</n-button>
           <n-button @click="showChangePassword = true">修改密码</n-button>
           <n-button @click="OutButtonClick">退出账号</n-button>
         </n-space>
@@ -70,6 +71,7 @@
 
 <script>
 import { h, ref, defineComponent } from "vue";
+import router from "@/router";
 import VueCookies from "vue-cookies";
 import CPAddResolution from "@/components/CP/CPAddResolution.vue";
 import CPResolutionList from "@/components/CP/CPResolutionList.vue";
@@ -183,6 +185,10 @@ export default defineComponent({
         VueCookies.remove("SESSDATA");
         window.$message.success("已退出账号");
         location.reload();
+      },
+      toStatistics(e) {
+        e.preventDefault();
+        router.push("/cp/statistics");
       },
     };
   },

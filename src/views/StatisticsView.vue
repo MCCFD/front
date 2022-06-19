@@ -20,13 +20,16 @@
 <script>
 import { ref, defineComponent } from "vue";
 import router from "@/router";
-import MD5 from "crypto-js/md5";
 import VueCookies from "vue-cookies";
-import { getUserInfo } from "@/API/cpAPI";
-import PCView from "@/views/PC/CPView.vue";
-import MobileView from "@/views/Mobile/CPView.vue";
-import { NCard, NSpin, NButton, NResult } from "naive-ui";
+import { getStatistics } from "@/API/cpAPI";
+import PCView from "@/views/PC/StatisticsView.vue";
+import MobileView from "@/views/Mobile/StatisticsView.vue";
 import { useMessage, useNotification } from "naive-ui";
+
+const getNowUTCTime = () => {
+  const nowTime = new Date();
+  return nowTime.getTime() + nowTime.getTimezoneOffset() * 60000;
+};
 
 const Init = async (callback) => {
   // 是否有SESSDATA
@@ -38,32 +41,39 @@ const Init = async (callback) => {
     return;
   }
   try {
-    const userInfo = await getUserInfo(sessdata);
-    var createData = [];
-    for (var i in userInfo.resolution.data) {
-      const tmp = userInfo.resolution.data[i];
-      createData.push({
-        key: i,
-        id: tmp.RID,
-        note: tmp.note,
-        domain: tmp.domain_prefix + ".mc.cfd",
-        serve: tmp.serve,
-        servePort: tmp.serve_port,
-      });
+    const NowUTCTime = getNowUTCTime();
+    const StatisticsData = await getStatistics(
+      sessdata,
+      NowUTCTime,
+      NowUTCTime
+    );
+    // Null
+    if (StatisticsData == {}) {
+      propsData.value = {
+        isNull: true,
+      };
+      callback(true);
+      return;
     }
     propsData.value = {
-      uid: userInfo.user.UID,
-      parsing: [
-        userInfo.resolution.data.length,
-        Number(userInfo.resolution.max),
-      ],
-      mail: userInfo.user.mail,
-      userName: userInfo.user.name,
-      userHead:
-        "https://gravatar.loli.net/avatar/" +
-        MD5(userInfo.user.mail).toString(),
-      createData: createData,
+      isNull: false,
+      tableData: [],
+      InitECharts: {
+        date: [],
+        statistics: [],
+      },
     };
+    for (const i in StatisticsData.domain) {
+      propsData.value.tableData.push({
+        Domain: i + ".mc.cfd",
+        RequestQuantity: StatisticsData.domain[i],
+      });
+    }
+    for (const i in StatisticsData.date) {
+      const dateData = StatisticsData.date[i];
+      propsData.value.InitECharts.date.push(dateData[0]);
+      propsData.value.InitECharts.statistics.push(dateData[1]);
+    }
     callback(true);
   } catch (e) {
     console.error("API ERROR", e);
@@ -77,7 +87,7 @@ const Init = async (callback) => {
   }
 };
 
-const propsData = ref([]);
+const propsData = ref({});
 const showError = ref(false);
 const showLoad = ref(true);
 const showUI = ref(false);
@@ -87,11 +97,6 @@ export default defineComponent({
   components: {
     PCView,
     MobileView,
-    // NaiveUI
-    NCard,
-    NSpin,
-    NButton,
-    NResult,
   },
   props: {
     userEQ: {
