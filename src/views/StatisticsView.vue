@@ -26,9 +26,9 @@ import PCView from "@/views/PC/StatisticsView.vue";
 import MobileView from "@/views/Mobile/StatisticsView.vue";
 import { useMessage, useNotification } from "naive-ui";
 
-const getNowUTCTime = () => {
+const getNowTime = () => {
   const nowTime = new Date();
-  return nowTime.getTime() + nowTime.getTimezoneOffset() * 60000;
+  return nowTime.getTime() + nowTime.getTimezoneOffset() * 60000 + 28800000;
 };
 
 const Init = async (callback) => {
@@ -41,12 +41,8 @@ const Init = async (callback) => {
     return;
   }
   try {
-    const NowUTCTime = getNowUTCTime();
-    const StatisticsData = await getStatistics(
-      sessdata,
-      NowUTCTime,
-      NowUTCTime
-    );
+    const NowTime = getNowTime();
+    const StatisticsData = await getStatistics(sessdata, NowTime, NowTime);
     // Null
     if (StatisticsData == {}) {
       propsData.value = {

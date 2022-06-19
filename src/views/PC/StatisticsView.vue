@@ -134,8 +134,8 @@ const updateData = async (v) => {
   try {
     const StatisticsData = await getStatistics(
       sessdata,
-      v[0] + TimezoneOffset,
-      v[1] + TimezoneOffset
+      v[0] + TimezoneOffset + 28800000,
+      v[1] + TimezoneOffset + 28800000
     );
     // Null
     if (StatisticsData == {}) {
