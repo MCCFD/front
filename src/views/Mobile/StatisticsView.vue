@@ -132,12 +132,19 @@ const updateData = async (v) => {
     router.push("/");
     return;
   }
-  const TimezoneOffset = new Date().getTimezoneOffset() * 60000;
+  const cTimestamp = (timestamp) => {
+    const t = new Date(timestamp);
+    const y = String(t.getFullYear());
+    let m = String(t.getMonth() + 1);
+    const d = String(t.getDate());
+    if (m.length == 1) m = "0" + m;
+    return Number(y + m + d);
+  };
   try {
     const StatisticsData = await getStatistics(
       sessdata,
-      v[0] + TimezoneOffset,
-      v[1] + TimezoneOffset
+      cTimestamp(v[0]),
+      cTimestamp(v[1])
     );
     // Null
     if (StatisticsData == {}) {

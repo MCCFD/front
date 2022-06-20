@@ -26,9 +26,13 @@ import PCView from "@/views/PC/StatisticsView.vue";
 import MobileView from "@/views/Mobile/StatisticsView.vue";
 import { useMessage, useNotification } from "naive-ui";
 
-const getNowTime = () => {
-  const nowTime = new Date();
-  return nowTime.getTime() + nowTime.getTimezoneOffset() * 60000 + 28800000;
+const getNowDate = () => {
+  const t = new Date();
+  const y = String(t.getFullYear());
+  let m = String(t.getMonth() + 1);
+  const d = String(t.getDate());
+  if (m.length == 1) m = "0" + m;
+  return Number(y + m + d);
 };
 
 const Init = async (callback) => {
@@ -41,8 +45,8 @@ const Init = async (callback) => {
     return;
   }
   try {
-    const NowTime = getNowTime();
-    const StatisticsData = await getStatistics(sessdata, NowTime, NowTime);
+    const NowDate = getNowDate();
+    const StatisticsData = await getStatistics(sessdata, NowDate, NowDate);
     // Null
     if (StatisticsData == {}) {
       propsData.value = {
