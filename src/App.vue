@@ -25,7 +25,7 @@
             <n-result status="418" title="维护中" size="huge">
               <template #footer>
                 <n-h5>现有解析可正常使用</n-h5>
-                <n-p>预计维护结束时间: <n-time :time="1652569200000" /></n-p>
+                <n-p>预计维护结束时间: <n-time :time="1655942400000" /></n-p>
                 <n-button @click="reload">刷新</n-button>
               </template>
             </n-result>
