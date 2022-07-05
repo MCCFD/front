@@ -26,7 +26,7 @@
     "crypto-js": "^4.1.1",
     "eslint": "^8.19.0",
     "eslint-config-prettier": "^8.3.0",
-    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-vue": "^9.1.0",
     "naive-ui": "^2.30.6",
     "prettier": "^2.7.1",
