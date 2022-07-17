@@ -131,7 +131,6 @@ import { defineComponent, computed, ref } from "vue";
 import router from "@/router";
 import MD5 from "crypto-js/md5";
 import VueCookies from "vue-cookies";
-import CONFIG from "@/config";
 import { registeredAPI, getCheckMailCodeAPI } from "@/API/registeredAPI";
 import { checkMail, checkPassword, checkUserName } from "@/assets/js/check";
 import VaptchaComponent from "@/components/VaptchaComponent";
@@ -176,8 +175,6 @@ export default defineComponent({
       return `${String(seconds).padStart(2, "0")}`;
     };
     return {
-      sitekey: CONFIG.reCaptcha.sitekey,
-      recaptchaHost: CONFIG.reCaptcha.recaptchaHost,
       showReCaptchaModal,
       showGetCheckMailCodeReCaptchaModal,
       getCheckMailCodeType,

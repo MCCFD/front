@@ -56,7 +56,6 @@ import router from "@/router";
 import VueCookies from "vue-cookies";
 import { loginAPI } from "@/API/loginAPI";
 import MD5 from "crypto-js/md5";
-import CONFIG from "@/config";
 import { checkMail, checkPassword } from "@/assets/js/check";
 import VaptchaComponent from "@/components/VaptchaComponent";
 import {
@@ -92,8 +91,6 @@ export default defineComponent({
     window.$message = useMessage();
     window.$notification = useNotification();
     return {
-      sitekey: CONFIG.reCaptcha.sitekey,
-      recaptchaHost: CONFIG.reCaptcha.recaptchaHost,
       showReCaptchaModal,
       Login: ref({
         Mail: LoginMail,
