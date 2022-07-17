@@ -7,7 +7,14 @@
     <meta name="keywords" content="Minecraft,我的世界,游戏,服务器,短域名,SRV" />
     <meta name="google-site-verification" content="U2Qs1w9_efFwjYwmJiQ0XzNVpFY8arJQtbP_xPTkFCw" />
     <title>MC.CFD</title>
-    <script src="//cdn-go.cn/aegis/aegis-sdk/latest/aegis.min.js"></script>
+    <script>
+      if ("serviceWorker" in navigator) {
+        navigator.serviceWorker.ready.then((registration) => {
+          registration.unregister();
+        });
+      }
+    </script>
+    <script async src="//cdn-go.cn/aegis/aegis-sdk/latest/aegis.min.js"></script>
     <script>
       const aegis = new Aegis({
         id: 'DvL96CEQn9Q6a8Ypzj', // 上报 id
