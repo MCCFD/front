@@ -91,14 +91,10 @@
         role="dialog"
         aria-modal="true"
       >
-        <vue-recaptcha
+        <VaptchaComponent
           v-if="showCheckMailCodeReCaptchaModal"
-          :sitekey="sitekey"
-          :recaptchaHost="recaptchaHost"
-          theme="dark"
-          @verify="checkMailCode_verifyMethod"
-          @expired="expiredMethod"
-          @error="errorMethod"
+          :scene="3"
+          @pass="checkMailCode_verifyMethod"
         />
       </n-card>
     </n-modal>
@@ -111,14 +107,10 @@
         role="dialog"
         aria-modal="true"
       >
-        <vue-recaptcha
+        <VaptchaComponent
           v-if="showOKReCaptchaModal"
-          :sitekey="sitekey"
-          :recaptchaHost="recaptchaHost"
-          theme="dark"
-          @verify="OK_verifyMethod"
-          @expired="expiredMethod"
-          @error="errorMethod"
+          :scene="3"
+          @pass="OK_verifyMethod"
         />
       </n-card>
     </n-modal>
@@ -129,11 +121,11 @@
 import { ref, computed, defineComponent } from "vue";
 import VueCookies from "vue-cookies";
 import router from "@/router";
-import { VueRecaptcha } from "vue-recaptcha";
 import CONFIG from "@/config";
 import MD5 from "crypto-js/md5";
 import { findAPI, getCheckMailCodeAPI } from "@/API/findAPI";
 import { checkMail, checkPassword } from "@/assets/js/check";
+import VaptchaComponent from "@/components/VaptchaComponent";
 import {
   NCard,
   NForm,
@@ -161,8 +153,8 @@ const Password = ref("");
 const RPassword = ref("");
 export default defineComponent({
   components: {
-    // reCaptcha
-    VueRecaptcha,
+    // Vaptcha
+    VaptchaComponent,
     // naiveUI
     NCard,
     NForm,
@@ -241,11 +233,18 @@ export default defineComponent({
           showCheckMailCodeReCaptchaModal.value = true;
         }
       },
-      async checkMailCode_verifyMethod(resp) {
-        console.log("reCaptcha 验证通过", resp);
+      async checkMailCode_verifyMethod(obj) {
+        const serverToken = obj.getServerToken();
+        const VaptchaServer = serverToken.server;
+        const VaptchaToken = serverToken.token;
+        console.log("Vaptcha 验证通过");
         // 请求API 获取验证码
         try {
-          await getCheckMailCodeAPI(Mail.value.toLocaleLowerCase(), resp);
+          await getCheckMailCodeAPI(
+            Mail.value.toLocaleLowerCase(),
+            VaptchaServer,
+            VaptchaToken
+          );
           window.$message.success("验证码发送成功, 请前往邮箱查看");
           getCheckMailCodeType.value = "wait";
         } catch (e) {
@@ -253,14 +252,18 @@ export default defineComponent({
         }
         showCheckMailCodeReCaptchaModal.value = false;
       },
-      async OK_verifyMethod(resp) {
-        console.log("reCaptcha 验证通过", resp);
+      async OK_verifyMethod(obj) {
+        const serverToken = obj.getServerToken();
+        const VaptchaServer = serverToken.server;
+        const VaptchaToken = serverToken.token;
+        console.log("Vaptcha 验证通过");
         // 请求API 找回密码
         try {
           const sessdata = await findAPI(
             CheckMailCode.value.toLocaleLowerCase(),
             MD5(Password.value).toString(),
-            resp
+            VaptchaServer,
+            VaptchaToken
           );
           VueCookies.set("SESSDATA", sessdata, "0");
           Mail.value = "";

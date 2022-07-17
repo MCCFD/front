@@ -12,15 +12,17 @@ import { axiosPOST } from "@/API/axios";
  * 找回密码API
  * @param {String} key Key
  * @param {String} password 密码
- * @param {String} reCaptchaKey 验证码
+ * @param {String} captchaServer Captcha服务器
+ * @param {String} captchaToken Captcha Token
  * @returns sessdata | [errorTitle, errorMessage, errorCode?]
  */
-const findAPI = async (key, password, reCaptchaKey) => {
+const findAPI = async (key, password, captchaServer, captchaToken) => {
   const path = "/api/find";
   const parameter = {
     key: key,
     password: password,
-    reCaptchaKey: reCaptchaKey,
+    captchaServer: captchaServer,
+    captchaToken: captchaToken,
   };
   try {
     const reqData = await axiosPOST(parameter, path);
@@ -38,14 +40,16 @@ const findAPI = async (key, password, reCaptchaKey) => {
 /**
  * 获取邮箱验证码API
  * @param {String} mail 邮箱
- * @param {String} reCaptchaKey 验证码
+ * @param {String} captchaServer Captcha服务器
+ * @param {String} captchaToken Captcha Token
  * @returns true | [errorTitle, errorMessage, errorCode?]
  */
-const getCheckMailCodeAPI = async (mail, reCaptchaKey) => {
+const getCheckMailCodeAPI = async (mail, captchaServer, captchaToken) => {
   const path = "/api/find/get_check_mail_code";
   const parameter = {
     mail: mail,
-    reCaptchaKey: reCaptchaKey,
+    captchaServer: captchaServer,
+    captchaToken: captchaToken,
   };
   try {
     await axiosPOST(parameter, path);

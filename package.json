@@ -30,8 +30,7 @@
     "eslint-plugin-vue": "^9.1.0",
     "naive-ui": "^2.30.8",
     "prettier": "^2.7.1",
-    "vue-cookies": "^1.8.1",
-    "vue-recaptcha": "^2.0.2"
+    "vue-cookies": "^1.8.1"
   },
   "eslintConfig": {
     "root": true,

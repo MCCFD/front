@@ -5,16 +5,24 @@ import { axiosPOST } from "@/API/axios";
  * @param {String} key checkMailCode
  * @param {String} userName 用户名
  * @param {String} password 密码
- * @param {String} reCaptchaKey 验证码
+ * @param {String} captchaServer Captcha服务器
+ * @param {String} captchaToken Captcha Token
  * @returns sessdata | [errorTitle, errorMessage, errorCode?]
  */
-const registeredAPI = async (key, userName, password, reCaptchaKey) => {
+const registeredAPI = async (
+  key,
+  userName,
+  password,
+  captchaServer,
+  captchaToken
+) => {
   const path = "/api/registered";
   const parameter = {
     key: key,
     userName: userName,
     password: password,
-    reCaptchaKey: reCaptchaKey,
+    captchaServer: captchaServer,
+    captchaToken: captchaToken,
   };
   try {
     const reqData = await axiosPOST(parameter, path);
@@ -32,14 +40,16 @@ const registeredAPI = async (key, userName, password, reCaptchaKey) => {
 /**
  * 获取邮箱验证码API
  * @param {String} mail 邮箱
- * @param {String} reCaptchaKey 验证码
+ * @param {String} captchaServer Captcha服务器
+ * @param {String} captchaToken Captcha Token
  * @returns true | [errorTitle, errorMessage, errorCode?]
  */
-const getCheckMailCodeAPI = async (mail, reCaptchaKey) => {
+const getCheckMailCodeAPI = async (mail, captchaServer, captchaToken) => {
   const path = "/api/registered/get_check_mail_code";
   const parameter = {
     mail: mail,
-    reCaptchaKey: reCaptchaKey,
+    captchaServer: captchaServer,
+    captchaToken: captchaToken,
   };
   try {
     await axiosPOST(parameter, path);

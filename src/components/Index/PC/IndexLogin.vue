@@ -41,14 +41,10 @@
       role="dialog"
       aria-modal="true"
     >
-      <vue-recaptcha
+      <VaptchaComponent
         v-if="showReCaptchaModal"
-        :sitekey="sitekey"
-        :recaptchaHost="recaptchaHost"
-        theme="dark"
-        @verify="verifyMethod"
-        @expired="expiredMethod"
-        @error="errorMethod"
+        :scene="1"
+        @pass="verifyMethod"
       />
     </n-card>
   </n-modal>
@@ -58,11 +54,11 @@
 import { defineComponent, computed, ref } from "vue";
 import router from "@/router";
 import VueCookies from "vue-cookies";
-import { VueRecaptcha } from "vue-recaptcha";
 import { loginAPI } from "@/API/loginAPI";
 import MD5 from "crypto-js/md5";
 import CONFIG from "@/config";
 import { checkMail, checkPassword } from "@/assets/js/check";
+import VaptchaComponent from "@/components/VaptchaComponent";
 import {
   NA,
   NForm,
@@ -80,8 +76,8 @@ const LoginPassword = ref("");
 const showReCaptchaModal = ref(false);
 export default defineComponent({
   components: {
-    // reCaptcha
-    VueRecaptcha,
+    // Vaptcha
+    VaptchaComponent,
     // naiveUI
     NA,
     NForm,
@@ -117,13 +113,17 @@ export default defineComponent({
       LoginPasswordMessage: computed(() => {
         return checkPassword.inputFeedback(LoginPassword.value);
       }),
-      async verifyMethod(resp) {
-        console.log("reCaptcha 验证通过");
+      async verifyMethod(obj) {
+        const serverToken = obj.getServerToken();
+        const VaptchaServer = serverToken.server;
+        const VaptchaToken = serverToken.token;
+        console.log("Vaptcha 验证通过");
         try {
           const sessdata = await loginAPI(
             LoginMail.value.toLocaleLowerCase(),
             MD5(String(LoginPassword.value)).toString(),
-            resp
+            VaptchaServer,
+            VaptchaToken
           );
           VueCookies.set("SESSDATA", sessdata, "0");
           LoginMail.value = "";
